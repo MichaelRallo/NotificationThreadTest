@@ -11,7 +11,7 @@ import javafx.application.Platform;
 
 /**
  *
- * @author dalemusser
+ * @author mikerallo
  * 
  * This example uses PropertyChangeSupport to implement
  * property change listeners.
@@ -21,16 +21,19 @@ public class Task3 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
+    private TaskState taskState;
     
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     
     public Task3(int maxValue, int notifyEvery)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.taskState = TaskState.READY;
     }
     
     @Override
     public void run() {
+        this.taskState = TaskState.RUNNING;
         doNotify("Task3 start.");
         for (int i = 0; i < maxValue; i++) {
             
@@ -42,10 +45,12 @@ public class Task3 extends Thread {
                 return;
             }
         }
+        this.taskState = TaskState.FINISHED;
         doNotify("Task3 done.");
     }
     
     public void end() {
+        this.taskState = TaskState.FINISHED;
         exit = true;
     }
     
@@ -66,4 +71,6 @@ public class Task3 extends Thread {
             pcs.firePropertyChange("message", "", message);
         });
     }
+    
+    public TaskState getTaskState(){return taskState;}
 }

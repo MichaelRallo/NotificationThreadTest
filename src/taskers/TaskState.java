@@ -6,5 +6,5 @@
 package taskers;
 
 public enum TaskState {
-    RUNNING, FINISHED
+    READY, RUNNING, FINISHED 
 }

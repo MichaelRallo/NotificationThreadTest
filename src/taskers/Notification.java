@@ -7,7 +7,7 @@ package taskers;
 
 /**
  *
- * @author dalemusser
+ * @author mikerallo
  */
 @FunctionalInterface
 public interface Notification {

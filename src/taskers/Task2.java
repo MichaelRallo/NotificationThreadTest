@@ -10,7 +10,7 @@ import javafx.application.Platform;
 
 /**
  *
- * @author dalemusser
+ * @author mikerallo
  * 
  * This example uses a Notification functional interface.
  * This allows the use of anonymous inner classes or
@@ -21,16 +21,19 @@ public class Task2 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
+    private TaskState taskState;
     
     private ArrayList<Notification> notifications = new ArrayList<>();
     
     public Task2(int maxValue, int notifyEvery)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.taskState = TaskState.READY;
     }
     
     @Override
     public void run() {
+        taskState = TaskState.RUNNING;
         doNotify("Started Task2!");
         
         for (int i = 0; i < maxValue; i++) {
@@ -43,10 +46,12 @@ public class Task2 extends Thread {
                 return;
             }
         }
+        taskState = TaskState.FINISHED;
         doNotify("Task2 done.");
     }
     
     public void end() {
+        taskState = TaskState.FINISHED;
         exit = true;
     }
     
@@ -63,4 +68,6 @@ public class Task2 extends Thread {
             });
         }
     }
+    
+    public TaskState getTaskState(){return taskState;}
 }

@@ -9,7 +9,7 @@ import javafx.application.Platform;
 
 /**
  *
- * @author dalemusser
+ * @author mikerallo
  * 
  * This example uses an object passed in with a notify()
  * method that gets called when a notification is to occur.
@@ -20,13 +20,14 @@ public class Task1 extends Thread {
     
     private int maxValue, notifyEvery;
     boolean exit = false;
+    private TaskState taskState;
     
     private Notifiable notificationTarget;
-    private TaskState taskState;
     
     public Task1(int maxValue, int notifyEvery)  {
         this.maxValue = maxValue;
         this.notifyEvery = notifyEvery;
+        this.taskState = TaskState.READY;
     }
     
     @Override
